@@ -29,7 +29,9 @@ async def inlinequery(update: Update, context: CallbackContext) -> None:
     offset = int(update.inline_query.offset) if update.inline_query.offset else 0
 
     if query.startswith('collection.'):
-        user_id, *search_terms = query.split(' ')[0].split('.')[1], ' '.join(query.split(' ')[1:])
+        split_query = query.split('.')
+user_id = split_query[1] if len(split_query) > 1 and split_query[1].isdigit() else None
+search_terms = ' '.join(split_query[2:]).strip() if len(split_query) > 2 else None
         if user_id.isdigit():
             if user_id in user_collection_cache:
                 user = user_collection_cache[user_id]
