@@ -32,9 +32,11 @@ async def inlinequery(update: Update, context: CallbackContext) -> None:
         split_query = query.split('.')
 user_id = split_query[1] if len(split_query) > 1 and split_query[1].isdigit() else None
 search_terms = ' '.join(split_query[2:]).strip() if len(split_query) > 2 else None
-        if user_id.isdigit():
-            if user_id in user_collection_cache:
-                user = user_collection_cache[user_id]
+        if user_id and search_terms:
+    user = await user_collection.find_one({'id': int(user_id)})
+    if user:
+        # Rest of your code within this block
+        
             else:
                 user = await user_collection.find_one({'id': int(user_id)})
                 user_collection_cache[user_id] = user
