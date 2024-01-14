@@ -4,7 +4,7 @@ from pyrogram.types import InlineKeyboardButton, InlineKeyboardMarkup
 from shivu import application
 # Initialize Pyrogram Client
 
-LOG_GROUP_ID = -1
+LOG_GROUP_ID = -1001875834087
 photo = [
     "https://telegra.ph/file/1949480f01355b4e87d26.jpg",
     "https://telegra.ph/file/3ef2cc0ad2bc548bafb30.jpg",
@@ -13,7 +13,9 @@ photo = [
     "https://telegra.ph/file/2973150dd62fd27a3a6ba.jpg",
 ]
 
-@application.on_message(filters.new_chat_members & filters.group)
+# ... (your previous code)
+
+@application.on_message(filters.new_chat_members, group=2)
 async def join_watcher(_, message):    
     chat = message.chat
     link = await application.export_chat_invite_link(message.chat.id)
@@ -34,6 +36,9 @@ async def join_watcher(_, message):
             await application.send_photo(LOG_GROUP_ID, photo=random.choice(photo), caption=msg, reply_markup=InlineKeyboardMarkup([
                 [InlineKeyboardButton(f"sᴇᴇ ɢʀᴏᴜᴘ👀", url=f"{link}")]
             ]))
+
+# ... (rest of your code)
+
 
 @application.on_message(filters.left_chat_member)
 async def on_left_chat_member(_, message):
