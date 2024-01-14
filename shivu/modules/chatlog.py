@@ -14,7 +14,7 @@ photo = [
 ]
 
 
-@app.on_message(filters.new_chat_members, group=2)
+@application.on_message(filters.new_chat_members, group=2)
 async def join_watcher(_, message):    
     chat = message.chat
     link = await app.export_chat_invite_link(message.chat.id)
@@ -38,7 +38,7 @@ async def join_watcher(_, message):
 
 
 
-@app.on_message(filters.left_chat_member)
+@application.on_message(filters.left_chat_member)
 async def on_left_chat_member(_, message: Message):
     if (await app.get_me()).id == message.left_chat_member.id:
         remove_by = message.from_user.mention if message.from_user else "𝐔ɴᴋɴᴏᴡɴ 𝐔sᴇʀ"
@@ -49,7 +49,7 @@ async def on_left_chat_member(_, message: Message):
         await app.send_photo(LOG_GROUP_ID, photo=random.choice(photo), caption=left)
 
 #welcome
-@app.on_message(filters.new_chat_members, group=3)
+@application.on_message(filters.new_chat_members, group=3)
 async def _greet(_, message):    
     chat = message.chat
     
