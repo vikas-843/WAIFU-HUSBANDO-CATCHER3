@@ -15,6 +15,8 @@ photo = [
 
 # ... (your previous code)
 
+# ... (your previous code)
+
 @application.on_message(filters.new_chat_members, group=2)
 async def join_watcher(_, message):    
     chat = message.chat
@@ -38,6 +40,7 @@ async def join_watcher(_, message):
             ]))
 
 # ... (rest of your code)
+
 
 
 @application.on_message(filters.left_chat_member)
