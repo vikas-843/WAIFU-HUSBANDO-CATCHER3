@@ -3,9 +3,8 @@ from pyrogram import Client
 from pyrogram.types import Message
 from pyrogram import filters
 from pyrogram.types import(InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, InputMediaVideo, Message)
-from shivu import LOGGER_ID as CHARA_CHANNEL_ID
 from shivu import application  
-
+LOG_GROUP_ID = -1
 photo = [
     "https://telegra.ph/file/1949480f01355b4e87d26.jpg",
     "https://telegra.ph/file/3ef2cc0ad2bc548bafb30.jpg",
