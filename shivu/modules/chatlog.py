@@ -3,7 +3,7 @@ from pyrogram import Client
 from pyrogram.types import Message
 from pyrogram import filters
 from pyrogram.types import(InlineKeyboardButton, InlineKeyboardMarkup, InputMediaPhoto, InputMediaVideo, Message)
-from shivu import LOGGER_ID as CHARA_CHANNEL_ID
+from shivu from config import LOGGER_ID as CHARA_CHANNEL_ID
 from shivu import application  
 
 photo = [
