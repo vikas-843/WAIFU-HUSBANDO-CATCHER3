@@ -10,6 +10,7 @@ from telegram import InlineKeyboardButton, InlineKeyboardMarkup
 
 from shivu import user_collection, collection, application, db
 
+
 # collection
 db.characters.create_index([('id', ASCENDING)])
 db.characters.create_index([('anime', ASCENDING)])
@@ -28,14 +29,16 @@ async def inlinequery(update: Update, context: CallbackContext) -> None:
     offset = int(update.inline_query.offset) if update.inline_query.offset else 0
 
     if query.startswith('collection.'):
-        split_query = query.split('.')
-        user_id = split_query[1] if len(split_query) > 1 and split_query[1].isdigit() else None
-        search_terms = ' '.join(split_query[2:]).strip() if len(split_query) > 2 else None
+        user_id, *search_terms = query.split(' ')[0].split('.')[1], ' '.join(query.split(' ')[1:])
+        if user_id.isdigit():
+            if user_id in user_collection_cache:
+                user = user_collection_cache[user_id]
+            else:
+                user = await user_collection.find_one({'id': int(user_id)})
+                user_collection_cache[user_id] = user
 
-        if user_id and search_terms:
-            user = await user_collection.find_one({'id': int(user_id)})
             if user:
-                all_characters = list({v['id']: v for v in user['characters']}.values())
+                all_characters = list({v['id']:v for v in user['characters']}.values())
                 if search_terms:
                     regex = re.compile(' '.join(search_terms), re.IGNORECASE)
                     all_characters = [character for character in all_characters if regex.search(character['name']) or regex.search(character['anime'])]
@@ -55,7 +58,6 @@ async def inlinequery(update: Update, context: CallbackContext) -> None:
                 all_characters_cache['all_characters'] = all_characters
 
     characters = all_characters[offset:offset+50]
-    # ... rest of the code
     if len(characters) > 50:
         characters = characters[:50]
         next_offset = str(offset + 50)
