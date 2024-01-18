@@ -28,7 +28,7 @@ async def get_next_sequence_number(sequence_name):
         return 0
     return sequence_document['sequence_value']
 
-async def upload(update: Update, context: CallbackContext) -> None:
+async def hupload(update: Update, context: CallbackContext) -> None:
     if str(update.effective_user.id) not in sudo_users:
         await update.message.reply_text('Ask My Owner...')
         return
@@ -82,7 +82,7 @@ async def upload(update: Update, context: CallbackContext) -> None:
     except Exception as e:
         await update.message.reply_text(f'Character Upload Unsuccessful. Error: {str(e)}\nIf you think this is a source error, forward to: {SUPPORT_CHAT}')
 
-async def delete(update: Update, context: CallbackContext) -> None:
+async def hdelete(update: Update, context: CallbackContext) -> None:
     if str(update.effective_user.id) not in sudo_users:
         await update.message.reply_text('Ask my Owner to use this Command...')
         return
@@ -105,7 +105,7 @@ async def delete(update: Update, context: CallbackContext) -> None:
     except Exception as e:
         await update.message.reply_text(f'{str(e)}')
 
-async def update(update: Update, context: CallbackContext) -> None:
+async def hupdate(update: Update, context: CallbackContext) -> None:
     if str(update.effective_user.id) not in sudo_users:
         await update.message.reply_text('You do not have permission to use this command.')
         return
@@ -167,9 +167,9 @@ async def update(update: Update, context: CallbackContext) -> None:
     except Exception as e:
         await update.message.reply_text(f'I guess did not added bot in channel.. or character uploaded Long time ago.. Or character not exits.. orr Wrong id')
 
-UPLOAD_HANDLER = CommandHandler('upload', upload, block=False)
-application.add_handler(UPLOAD_HANDLER)
-DELETE_HANDLER = CommandHandler('delete', delete, block=False)
-application.add_handler(DELETE_HANDLER)
-UPDATE_HANDLER = CommandHandler('update', update, block=False)
-application.add_handler(UPDATE_HANDLER)
+HUPLOAD_HANDLER = CommandHandler('hupload', hupload, block=False)
+application.add_handler(HUPLOAD_HANDLER)
+HDELETE_HANDLER = CommandHandler('hdelete', hdelete, block=False)
+application.add_handler(HDELETE_HANDLER)
+HUPDATE_HANDLER = CommandHandler('hupdate',hupdate, block=False)
+application.add_handler(HUPDATE_HANDLER)
